@@ -10,31 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_25_183043) do
+ActiveRecord::Schema.define(version: 2018_07_25_201204) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.integer "user_id"
+    t.integer "categorie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["categorie_id"], name: "index_articles_on_categorie_id"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "categorie_name"
     t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_categories_on_article_id"
   end
 
+  create_table "commentaires", force: :cascade do |t|
+    t.text "content_comment"
+    t.integer "user_id"
+    t.integer "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_commentaires_on_article_id"
+    t.index ["user_id"], name: "index_commentaires_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_likes_on_article_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
+    t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_users_on_article_id"
   end
 
 end
